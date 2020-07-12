@@ -1,0 +1,62 @@
+title: Aleksander Tidemann
+author:
+  name: Contact
+  email: "aleksandertid at gmail"
+url: "https://AleksanderTidemann.github.io"
+description: > # this means to ignore newlines until "show_excerpts:"
+  A site dedicated to exploring creative technologies.
+
+show_excerpts: true # set to true to show excerpts on the homepage
+paginate: 3
+paginate_path: "/blog/page:num/"
+categories:
+  - General
+  - Development
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+ - jekyll-feed
+ - jekyll-seo-tag
+ - jekyll-paginate
+
+# Minima date format
+# refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
+
+minima:
+  skin: dark
+  date_format: "%b %-d, %Y"
+
+  # generate social links in footer
+  social_links:
+    #twitter: jekyllrb
+     github:  AleksanderTidemann
+    # devto: jekyll
+    # dribbble: jekyll
+    # facebook: aleksander.tidemann
+    # flickr:   jekyll
+     instagram: theholymountainduo
+    # linkedin: jekyll
+    # pinterest: jekyll
+    # youtube: jekyll
+     youtube_channel: UCu4GtDsjVkC7UO_NFJVJcGA
+    # youtube_channel_name: CloudCannon
+    # telegram: jekyll
+    # googleplus: +jekyll
+    # microdotblog: jekyll
+    # keybase: jekyll
+
+    # Mastodon instances
+    # mastodon:
+    # - username: jekyll
+    #   instance: example.com
+    # - username: jekyll2
+    #   instance: example.com
+
+    # GitLab instances
+    # gitlab:
+    # - username: jekyll
+    #   instance: example.com
+    # - username: jekyll2
+    #   instance: example.com
