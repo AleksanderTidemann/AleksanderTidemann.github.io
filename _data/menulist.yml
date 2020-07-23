@@ -6,7 +6,7 @@ toc:
     subfolderitems:
       - page: General
         url: /General/
-      - page: Development
-        url: /Development/
+      - page: Projects
+        url: /Projects/
   - title: Search
     url: /Search/

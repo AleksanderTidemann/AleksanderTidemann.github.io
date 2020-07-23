@@ -1,13 +1,13 @@
 ---
 layout: page
-title: Development
-permalink: /Development/
+title: Projects
+permalink: /Projects/
 ---
 
 {%- if site.posts.size > 0 -%}
   <!-- <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2> -->
   <ul class="post-list">
-    {%- for post in site.categories.Development -%}
+    {%- for post in site.categories.Projects -%}
     <li>
       {%- if post.image -%}
       <img src="{{ post.image | prepend: site.baseurl }}" alt="{{ post.title }}" title="{{ post.title }}">

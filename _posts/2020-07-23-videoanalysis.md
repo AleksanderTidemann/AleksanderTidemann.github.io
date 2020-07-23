@@ -3,13 +3,13 @@ layout: post
 date: 2020-07-23
 title: "VideoAnalysis"
 image: /assets/img/2020_07_19_va_main.png
-categories: Development
+categories: Projects
 excerpt: "VideoAnalysis is a standalone application for creating visualizations and extracting motion features from video files, developed by myself and Balint Laczko in collaboration with RITMO (Center for Interdisciplinary Studies in Rhythm, Time and Motion) and the FourMS lab at the University of Oslo."
 ---
 
 In the early fall of 2019, myself and a group of research assistants at the RITMO center at UiO were given the opportunity to refurbish and develop a series of video and audio analysis software through the [**FourMS lab**](https://www.uio.no/ritmo/english/research/labs/fourms/). Among these were VideoAnalysis, AudioVideoAnalysis and AudioAnalysis (standalone applications developed in MaxMSP), as well as a few more powerful analysis tools such as the [**Musical Gestures Toolbox for Matlab**](https://github.com/fourMs/MGT-matlab/) and the [**Musical Gestures Toolbox for Python**](https://github.com/fourMs/MGT-python).
 
-I began this project by redeveloping and updating the VideoAnalysis application together with the great [**Balint Lackzo**](https://github.com/balintlaczko), now a good friend and a bottomless source of inspiration (he's awesome).
+I began this project by redeveloping and updating the VideoAnalysis application together with the great [**Balint Lackzo**](https://github.com/balintlaczko), now a good friend and my own personal bottomless pit of creative inspiration (he's awesome).
 
 <figure align="middle">
    <img src="/assets/img/2020_07_19_va_main.png" alt="Alternate Text"
