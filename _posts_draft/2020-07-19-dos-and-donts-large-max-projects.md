@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2020
 title: "Some Dos and Don'ts when developing large-scale standalone applications in MaxMSP"
 image: /assets/img/2020_07_19_va_main.png
 categories: Development

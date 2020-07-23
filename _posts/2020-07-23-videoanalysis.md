@@ -2,7 +2,7 @@
 layout: post
 date: 2020-07-23
 title: "VideoAnalysis"
-image: /assets/img/2020_07_19_va_main.png
+image: /assets/img/2020_07_23_va_main.png
 categories: Projects
 excerpt: "VideoAnalysis is a standalone application for creating visualizations and extracting motion features from video files, developed by myself and Balint Laczko in collaboration with RITMO (Center for Interdisciplinary Studies in Rhythm, Time and Motion) and the FourMS lab at the University of Oslo."
 ---
@@ -11,32 +11,35 @@ In the early fall of 2019, myself and a group of research assistants at the RITM
 
 I began this project by redeveloping and updating the VideoAnalysis application together with the great [**Balint Lackzo**](https://github.com/balintlaczko), now a good friend and my own personal bottomless pit of creative inspiration (he's awesome).
 
-<figure align="middle">
-   <img src="/assets/img/2020_07_19_va_main.png" alt="Alternate Text"
-   title="VideoAnalysis 2.1" width="647" height="226" />
-   <figcaption align="middle">VideoAnalysis 2.1</figcaption>
+## Musical Gestures Toolbox for MaxMSP
+
+<figure style="float: left; margin-right: 10px;">
+   <img src="/assets/img/2020_07_23_va_1.jpg" alt="VideoAnalysis 1.0"
+   title="VideoAnalysis 1.0" width="auto" />
+   <figcaption>VideoAnalysis 1.0</figcaption>
 </figure>
 
-## Musical Gestures Toolbox for MaxMSP
 The MaxMSP analysis applications were started by [**Alexander Refsum Jensenius**](http://people.uio.no/alexanje) in 2003, first in the form of the [**Musical Gestures Toolbox for Max**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/musicalgesturestoolbox/mgt-max/). The toolbox later became integrated as the first collection of video modules in the [**Jamoma**](http://www.jamoma.org) project. Read more about the project in the cited research paper below in the reference section.
 
 It turned out that many people found the tools for video visualization useful, but they did not want to invest time in learning how to develop in Max. This led to the development of the standalone VideoAnalysis application, based on modules from the MGT. Over the years, it has been used by several researchers and practitioners in fields such as music, dance, medicine, and physiotherapy.
 
-However, in 2019 these unattended applications were outdated (16 years to be exact) and in dire need of revision.
+However, in 2019 these unattended applications were outdated and in dire need of revision.
 
-## VideoAnalysis 2.1
-<figure align="middle">
-   <img src="/assets/img/2020_07_19_va_ui1.png" alt="Alternate Text"
-   title="VideoAnalysis 2.1" width="auto" height="auto" />
-   <figcaption align="middle">VideoAnalysis 2.0 main UI</figcaption>
+# VideoAnalysis 2.1
+
+<figure>
+   <img src="/assets/img/2020_07_23_va_main.png" alt="Alternate Text"
+   title="VideoAnalysis 2.1" width="auto" />
+   <figcaption>VideoAnalysis 2.1</figcaption>
 </figure>
 
-Our main task was to remove unwanted dependencies on "ancient" MaxMSP externals, such as Jamoma, and replace them with more stable and long-term solutions. However, given our project time-frame, Balint's otherworldly capabilities in MaxMSP and our general view on the current state of the application, we ended up completely redeveloping the software. Though the same general features persist (export a series of motion analysis data and generate some interesting visualizations of motion in video files), everything around them was thoroughly updated, tested and (most importantly) optimized for non-realtime video processing.  
+Our main task was to take the VideoAnalysis 1.0 and remove any dependencies it had on "old" MaxMSP external packages, such as Jamoma, and replace them with more stable and long-term solutions. However, given our project time-frame, Balint's otherworldly capabilities in MaxMSP and our general view on the state of the application, we ended up completely redeveloping the software. Though the same general features persist (the ability to export a series of motion data and generate some interesting motion visualizations), everything around them was thoroughly updated, tested and (most importantly) optimized for non-realtime video processing.  
 
-The purpose of our newly developed version of VideoAnalysis (2.1), other than to be a steady application for relatively low-level video and motion analysis on video files, is to inspire its users to dig further down the motion and video analysis rabbit-hole. More specifically, down where the MatLab and Python versions are. Hopefully, it achieves this by being a fast, easy and reliable source of motion data, a kind of data that otherwise would be both time-consuming and difficult to attain for beginners.
+The purpose of our newly developed 2.1 version, other than to be a steady application for relatively low-level video and motion analysis on video files, is to inspire its users to dig further down the motion and video analysis rabbit-hole. More specifically, down where the MatLab and Python versions are. Hopefully, it achieves this by being a fast, easy and reliable source of motion data, a kind of data that otherwise would be both time-consuming and difficult to attain for beginners.
 
-### Features
- VideoAnalysis (2.1) enable users to pre-process, view and export a whole array of motion data and interesting visualizations through a user-friendly and engaging GUI. Among its many features, the following prominently stick out:
+## Features
+
+ In VideoAnalysis (2.1) you can pre-process, view and export a whole array of motion data and interesting visualizations through a user-friendly and engaging GUI. Among its many features, the following prominently stick out:
 
 * Open individual video files or batch-process folders of files
   * Drag and drop supported
@@ -64,6 +67,12 @@ The purpose of our newly developed version of VideoAnalysis (2.1), other than to
 * In-depth *How to use* guide
 * Report issues straight to the developer site
 
+<figure align="middle">
+   <img src="/assets/img/2020_07_23_va_cropping.gif" alt="Alternate Text"
+   title="VideoAnalysis 2.1" width="auto" />
+   <figcaption align="middle">Cropping and display window preview with VideoAnalysis 2.0</figcaption>
+</figure>
+
 If you want a more detailed run-through of these features, and how to use the application in general, you can access the in-depth *How To Use* guide online [**from this website**](https://github.com/fourMs/VideoAnalysis/wiki) complete with lots of yummy illustrations and step-by-step instructions.
 
 *
@@ -74,15 +83,9 @@ The application is one hundred percent open source and available on both OSX and
 * [**FourMS GitHub page**](https://github.com/fourMs/VideoAnalysis/releases)
 * [**RITMO homepage at the University of Oslo**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/VideoAnalysis/)
 
-<figure align="middle">
-   <img src="/assets/img/2020_07_19_va_cropping.gif" alt="Alternate Text"
-   title="VideoAnalysis 2.1" width="647" height="226" />
-   <figcaption align="middle">Cropping and display window preview with VideoAnalysis 2.0</figcaption>
-</figure>
-
 If you want to contribute to VideoAnaysis' development you are free to do so. Simply fork the [**main VideoAnalysis repo**](https://github.com/fourMs/VideoAnalysis), clone it, develop some awesome stuff and make a pull request for us to review.
 
-## Trials and Tribulations
+# Trials and Tribulations
 
 Through our development, we encountered a bunch of strange problems, everything from mysterious unwanted video/image artifacts to the inability to send the app to anyone over the internet and for them to have it working without a nasty hack. In fact, we experienced so many problems that the development process resulted in the discovery of at least 2 major bugs with MaxMSP itself. Some of these were reported and readily updated/fixed in later MaxMSP version updates. So in other words, quite a lot of interesting stuff happened which I will definitely write more about in the future.
 
@@ -92,7 +95,13 @@ In VideoAnalysis 2.1, all the processing happens on the CPU. What this means is 
 
 The reason we didn't do this from the start of our re-development process is that we didn't think the application would grow to the size ended up having. It also wasn't originally part of our job. Almost none of this was. But looking back it pains me to know that the performance of VideoAnalysis might have been exponentially better if we had spent a little more time on project management.
 
-## Reference
+# Reference
+
+<figure>
+   <img src="/assets/img/2020_07_23_va_ui1.png" alt="Alternate Text"
+   title="VideoAnalysis 2.1" width="auto" />
+   <figcaption align="middle">VideoAnalysis 2.0 main UI</figcaption>
+</figure>
 
 If you use this toolbox for research purposes, please reference this publication:
 
