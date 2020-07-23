@@ -9,7 +9,7 @@ permalink: /Alltopics/
   <ul class="post-list">
     {%- for post in site.posts -%}
     {%- if post.categories contains 'General'
-    or post.categories contains 'Development'
+    or post.categories contains 'Projects'
     -%}
 
     <li>
