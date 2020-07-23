@@ -95,7 +95,7 @@ In VideoAnalysis 2.1, all the processing happens on the CPU. What this means is 
 
 The reason we didn't do this from the start of our re-development process is that we didn't think the application would grow to the size ended up having. It also wasn't originally part of our job. Almost none of this was. But looking back it pains me to know that the performance of VideoAnalysis might have been exponentially better if we had spent a little more time on project management.
 
-# Reference
+# References
 
 <figure>
    <img src="/assets/img/2020_07_23_va_ui1.png" alt="Alternate Text"
