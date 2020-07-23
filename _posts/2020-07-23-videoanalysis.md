@@ -30,7 +30,7 @@ However, in 2019 these unattended applications were outdated and in dire need of
 <figure>
    <img src="/assets/img/2020_07_23_va_main.png" alt="Alternate Text"
    title="VideoAnalysis 2.1" width="auto" />
-   <figcaption>VideoAnalysis 2.1</figcaption>
+   <figcaption></figcaption>
 </figure>
 
 Our main task was to take the VideoAnalysis 1.0 and remove any dependencies it had on "old" MaxMSP external packages, such as Jamoma, and replace them with more stable and long-term solutions. However, given our project time-frame, Balint's otherworldly capabilities in MaxMSP and our general view on the state of the application, we ended up completely redeveloping the software. Though the same general features persist (the ability to export a series of motion data and generate some interesting motion visualizations), everything around them was thoroughly updated, tested and (most importantly) optimized for non-realtime video processing.  
