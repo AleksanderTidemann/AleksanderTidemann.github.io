@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2020-07-23 
 title: "VideoAnalysis"
 image: /assets/img/2020_07_19_va_main.png
 categories: Development
