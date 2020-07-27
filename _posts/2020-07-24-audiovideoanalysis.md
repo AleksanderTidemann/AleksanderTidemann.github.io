@@ -15,7 +15,7 @@ Welcome to the second installment of a three-part series on my adventures of red
    <figcaption>AudioVideoAnalysis 0.1</figcaption>
 </figure>
 
-AudioVideoAnalysis 0.1 was an application that recorded video/motiongrams and spectrograms from any available media source, developed by [**Alexander Refsum Jensenius**](http://people.uio.no/alexanje) in the early 2000s as a part of the [**Musical Gestures Toolbox for Max**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/musicalgesturestoolbox/mgt-max/). Its intended purpose was to provide a quick, reliable and easy way of analyzing spectral content of both video and audio together on one platform.
+AudioVideoAnalysis 0.1 was an application that recorded video/motiongrams and spectrograms from any available media source connected to your computer, developed by [**Alexander Refsum Jensenius**](http://people.uio.no/alexanje) in the early 2000s as a part of the [**Musical Gestures Toolbox for Max**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/musicalgesturestoolbox/mgt-max/). Its intended purpose was to provide a quick, reliable and easy way of recording and analyzing spectral content of both video and audio together on one platform.
 
 My task was to update the application and replace any old dependencies with more long-term and stable solutions. In this process, I stayed true to the original design aspects and tried to improve them as much as I could hoping that it would contribute to its main purpose and inspire more people to play with spectral analysis.
 
