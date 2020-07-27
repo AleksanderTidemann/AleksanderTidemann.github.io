@@ -14,6 +14,9 @@ excerpt: "I have learned some stuff.."
   * Utilize tabs and the Menubar for effective use of space!
 
   * Store settings is useful
+  * Differences between realtime and non-realtime applications.
+
+  * App launch location and size(!)
 
 * Working collaboratively with MaxMSP on GitHub
   * Abstractions

@@ -4,7 +4,7 @@ author:
   email: "aleksandertid at gmail"
 url: "https://AleksanderTidemann.github.io"
 description: > # this means to ignore newlines until "show_excerpts:"
-  A site dedicated to exploring creative technologies.
+  Music and creative technology exploration and research.
 
 show_excerpts: true # set to true to show excerpts on the homepage
 paginate: 3

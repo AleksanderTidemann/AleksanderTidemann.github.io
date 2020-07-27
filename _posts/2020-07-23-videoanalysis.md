@@ -4,12 +4,12 @@ date: 2020-07-23
 title: "VideoAnalysis"
 image: /assets/img/2020_07_23_va_main.png
 categories: Projects
-excerpt: "VideoAnalysis is a standalone application for creating visualizations and extracting motion features from video files, developed by myself and Balint Laczko in collaboration with RITMO (Center for Interdisciplinary Studies in Rhythm, Time and Motion) and the FourMS lab at the University of Oslo."
+excerpt: "A standalone application for creating visualizations and extracting motion features from video files, developed by myself and Balint Laczko in collaboration with RITMO (Center for Interdisciplinary Studies in Rhythm, Time and Motion) and the FourMS lab at the University of Oslo."
 ---
 
-In the early fall of 2019, myself and a group of research assistants at the RITMO center at UiO were given the opportunity to refurbish and develop a series of video and audio analysis software through the [**FourMS lab**](https://www.uio.no/ritmo/english/research/labs/fourms/). Among these were VideoAnalysis, AudioVideoAnalysis and AudioAnalysis (standalone applications developed in MaxMSP), as well as a few more powerful analysis tools such as the [**Musical Gestures Toolbox for Matlab**](https://github.com/fourMs/MGT-matlab/) and the [**Musical Gestures Toolbox for Python**](https://github.com/fourMs/MGT-python).
+In the early fall of 2019, me and a few others were given the opportunity to become research assistants for the RITMO Center for Interdisciplinary Studies in Rhythm, Time and Motion at the University of Oslo. The reason our hire was that our employers sought to update and refurbish a series of sound and video analysis tools developed at the [**FourMS lab**](https://www.uio.no/ritmo/english/research/labs/fourms/). Among these analysis tools were the [**Musical Gestures Toolbox for MaxMSP**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/musicalgesturestoolbox/mgt-max/), consisting of the VideoAnalysis, AudioVideoAnalysis and AudioAnalysis applications, as well as a few more powerful tools such as the [**Musical Gestures Toolbox for Matlab**](https://github.com/fourMs/MGT-matlab/) and the [**Musical Gestures Toolbox for Python**](https://github.com/fourMs/MGT-python).
 
-I began this project by redeveloping and updating the VideoAnalysis application together with the great [**Balint Lackzo**](https://github.com/balintlaczko), now a good friend and my own personal bottomless pit of creative inspiration (he's awesome).
+I was first assigned to update the VideoAnalysis application together with the great [**Balint Lackzo**](https://github.com/balintlaczko), now a good friend and bottomless pit of creative inspiration (he's awesome).
 
 ## Musical Gestures Toolbox for MaxMSP
 
@@ -19,11 +19,9 @@ I began this project by redeveloping and updating the VideoAnalysis application 
    <figcaption>VideoAnalysis 1.0</figcaption>
 </figure>
 
-The MaxMSP analysis applications were started by [**Alexander Refsum Jensenius**](http://people.uio.no/alexanje) in 2003, first in the form of the [**Musical Gestures Toolbox for Max**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/musicalgesturestoolbox/mgt-max/). The toolbox later became integrated as the first collection of video modules in the [**Jamoma**](http://www.jamoma.org) project. Read more about the project in the cited research paper below in the reference section.
+The Musical Gestures Toolbox for Max was originally developed by [**Alexander Refsum Jensenius**](http://people.uio.no/alexanje) in the early 2000's. The toolbox later became integrated as the first collection of video modules in the [**Jamoma**](http://www.jamoma.org) project. Read more about this in the cited research paper below.
 
-It turned out that many people found the tools for video visualization useful, but they did not want to invest time in learning how to develop in Max. This led to the development of the standalone VideoAnalysis application, based on modules from the MGT. Over the years, it has been used by several researchers and practitioners in fields such as music, dance, medicine, and physiotherapy.
-
-However, in 2019 these unattended applications were outdated and in dire need of revision.
+It turned out that many people found the tools for video visualization useful, but they did not want to invest time in learning how to develop in Max. This led to the development of the standalone VideoAnalysis application, based on modules from the MGT. Over the years, it has been used by several researchers and practitioners in fields such as music, dance, medicine, and physiotherapy. However, in 2019 these unattended analysis applications were outdated and in dire need of revision.
 
 # VideoAnalysis 2.1
 
@@ -33,13 +31,74 @@ However, in 2019 these unattended applications were outdated and in dire need of
    <figcaption></figcaption>
 </figure>
 
-Our main task was to take the VideoAnalysis 1.0 and remove any dependencies it had on "old" MaxMSP external packages, such as Jamoma, and replace them with more stable and long-term solutions. However, given our project time-frame, Balint's otherworldly capabilities in MaxMSP and our general view on the state of the application, we ended up completely redeveloping the software. Though the same general features persist (the ability to export a series of motion data and generate some interesting motion visualizations), everything around them was thoroughly updated, tested and (most importantly) optimized for non-realtime video processing.  
+Our main task was to remove any dependencies the application had on "old" MaxMSP external packages, such as Jamoma, and replace them with more stable and long-term solutions. However, given our project time-frame, Balint's otherworldly abilities in MaxMSP and our general view on the state of the application, we ended up completely redeveloping the software. Though the same general features persisted (the ability to export a series of motion data and generate some interesting motion visualizations), the architecture was thoroughly updated, tested and (most importantly) optimized for non-realtime video processing.  
 
-The purpose of our newly developed 2.1 version, other than to be a steady application for relatively low-level video and motion analysis on video files, is to inspire its users to dig further down the motion and video analysis rabbit-hole. More specifically, down where the MatLab and Python versions are. Hopefully, it achieves this by being a fast, easy and reliable source of motion data, a kind of data that otherwise would be both time-consuming and difficult to attain for beginners.
+The purpose of our newly developed 2.1 version, other than to be a steady application for relatively low-level video and motion analysis on video files, is to inspire its users to dig further down the motion and video analysis rabbit-hole ( more specifically, down where the MatLab and Python versions are). Hopefully, our application achieves this by being a fast and easy source of motion data, a kind of data that otherwise would be both time-consuming and difficult to attain for beginners.
 
 ## Features
+ In VideoAnalysis 2.1 you can pre-process, view and export a whole array of motion data and interesting visualizations through a user-friendly and engaging GUI. Though being relatively similar to its original core design, the 2.1 version harbors many new features, some of which I would like to discuss in further detail before providing a general list of its most prominent features.
 
- In VideoAnalysis (2.1) you can pre-process, view and export a whole array of motion data and interesting visualizations through a user-friendly and engaging GUI. Among its many features, the following prominently stick out:
+### Batch processing
+One of the applications key features is its ability to batch process folders of video files. This means we can generate a bunch of data fast, simply by dragging and dropping a folder into application, adjust settings and hit export. With batch processing support came also the need for a system to store and recall settings from individual video files. To tackle this, we decided to implement a system that would let users decide to either ```Remember settings for each file``` or ```Use same settings for each file``` from the applications menubar. When switching from ```Remember settings for each file``` to ```Use same settings for each file```, the current settings will be applied to all videos. In this scenario, It's also possible to switch back to ```Remember settings for each file``` to regain the individual video settings from before.
+
+<figure style="float: left; margin-right: 10px;">
+   <img src="/assets/img/2020_07_23_va_settings.png" alt="Settings"
+   title="Settings" width="320" />
+   <figcaption></figcaption>
+</figure>
+
+This feature is a big contribution to VideoAnaysis' *easy-to-use* design and can have a huge impact on its effectiveness. It's also possible to save your settings as a .json file which can make it easy to pick up your work where you left off, or to share your settings with other users later on.
+
+<br>
+
+### Cropping, Trimming and Skipping
+Being a non-realtime application, VideoAnaysis is designed to be a reliable exporter of analysis content. However, an unfortunate side-effect of this is processing speed. Since we wanted to facilitate for reasonable processing speeds regardless of whether videos are large, small, long or short, we decided to implement three options which were directly designed to either reduce a videos size or its length.
+
+<figure style="float: left; margin-right: 10px;">
+   <img src="/assets/img/2020_07_23_va_source_display.png" alt="Source Display"
+   title="Source Display" width="320" />
+   <figcaption></figcaption>
+</figure>
+
+Cropping can greatly reduce the video size and can reduce export time by a large factor. In VideoAnalysis you can crop any video by enabling the cropping button before clicking and dragging your preferred cropping rectangle in the preview window. We can also reduce any videos length by either trimming or skipping.
+
+Trimming is a feature that sets new start and end times to our video and can be adjusted visually by configuring the yellow banner in the playbar or numerically from the applications main UI. This can be helpful if the desired analysis material is located at a very specific place in our video or if there are portions at the beginning or end which can be discarded without compromising the analysis.
+
+Skipping, on the other hand, is a method where you specify a factor by which its multiple decides which frames are processed. Lets say you have a skipping value of 1, this means we skip every other frame only processing frames ```1, 3, 5, 7 etc.```. Consequently, this will reduce processing time by 50%(!) as we are effectively cutting the video in half while actually preserving most of its content.
+
+These features lets us control the size of the video in various ways but would not be very helpful without a frame of reference. In light of this, we also implemented ```Total Frames``` and ```Duration``` counters in the applications main UI so we can always keep track of how many frames of the current video are scheduled for processing.
+
+### Video Visualizations
+
+<figure>
+   <img src="/assets/img/2020_07_23_va_displaywindow.png" alt="displaywindow"
+   title="displaywindow" width="auto" />
+   <figcaption>Video Analysis display window showing Box, History and Motion video.</figcaption>
+</figure>
+
+In addition to extracting motion data, VideoAnaysis can also create useful visualizations of movement in videos. These include average and motion average images (see image below), video/motiongrams, history video, box video and motion videos. Although some of these visualizations are available to preview in the applications display window and UI, most of them are only available via export. You can read much more about these visualization techniques in [**this article by Alexander Jensenius**](https://www.duo.uio.no/handle/10852/26907).
+
+The motion video can be previewed in the applications display window. To create a motion video we calculate the difference between the current frame and previous frame. This will generate an image where only the motion in the video is represented as color while the rest is black. Furthermore, to reduce unwanted video static and noise, we've added two different noise filter (unary and binary) to discard irrelevant movement information. You can choose which ```filter``` to use and adjust the ```threshold``` setting directly from the UI.
+
+<figure style="float: left; margin-left: 10px;">
+  <img src="/assets/img/2020_07_23_va_pianist_avg.jpg"
+  alt="motion average image" title="motion average image" width="320" />
+  <figcaption>An average image of a pianist video. Notice the fog-like area over keyboard indicating where the biggest concentration of motion is located.</figcaption>
+</figure>
+
+<figure style="float:none">
+  <img src="/assets/img/2020_07_23_va_pianist_motionavg.jpg"
+  alt="average image" title="average image" width="320" />
+  <figcaption>An motion average image of the same video efficiently filtering out useless information.
+  Both images are generated with VideoAnaysis 2.1.</figcaption>
+</figure>
+
+Motiongrams are closely linked to the motion videos in that they use a motion image to represent motion over time. In VideoAnaysis, and in the earlier **Musical Gestures Toolbox for MaxMSP**, motiongrams are created by calculating mean values of either every row or column of a frame (depending if we want to represent time on the x or y-axis) by using the ```[jit.xray.mean]``` object. This will generate a one-dimensional matrix of mean values that we can use to sequentially print across a "canvas" to produce a motiongram. Similarly, videograms are created the same way only bypassing the preceding motion image processing.
+
+At the center of the display window shown above is a representation of a history video. This technique tracks the center of motion (centroid) in our motion image by drawing red circles onto our unprocessed video. If we change the ```Snake Length``` parameter in the UI, we can customize the length of our centroid snake (succession of circles) that we can use to track and visualize the motion history. Similarly, the box video analyzes the movement in a motion image and isolates it through a bounding box printed onto our unprocessed video. In the UI we can adjust the refresh ```rate``` of our box, as well as the box ```radius``` and noise ```threshold``` for more control.   
+
+### General
+If you want a more detailed run-through of these features, and how to use the application in general, you can access an in-depth *How To Use* guide online [**from this website**](https://github.com/fourMs/VideoAnalysis/wiki) complete with lots of yummy illustrations and step-by-step instructions. And finally, a more general list of VideoAnaysis' (2.1) most prominent features:
 
 * Open individual video files or batch-process folders of files
   * Drag and drop supported
@@ -50,33 +109,24 @@ The purpose of our newly developed 2.1 version, other than to be a steady applic
   * Trimming
   * Color
   * Rotation
-  * etc..
 * Extract motion features from video files
   * Quantity of motion
   * Centroid of motion
   * Area of motion
   * All data exported in .csv format
 * Create various types of visualizations from video files
+  * Average and motion average images
   * Motiongrams and Videograms
-  * Motion images
-  * Centroid of motion video
-  * Box image video
   * Motion video
-  * etc..
+  * Centroid of motion video (History)
+  * Box video
 * Store, use and recall all video settings
 * In-depth *How to use* guide
-* Report issues straight to the developer site
+* Report issues straight to developers site
 
-<figure align="middle">
-   <img src="/assets/img/2020_07_23_va_cropping.gif" alt="Alternate Text"
-   title="VideoAnalysis 2.1" width="auto" />
-   <figcaption align="middle">Cropping and display window preview with VideoAnalysis 2.0</figcaption>
-</figure>
-
-If you want a more detailed run-through of these features, and how to use the application in general, you can access the in-depth *How To Use* guide online [**from this website**](https://github.com/fourMs/VideoAnalysis/wiki) complete with lots of yummy illustrations and step-by-step instructions.
-
-*
-<sup>Its important to note that the VideoAnalysis is a *non-realtime analysis application* which means that it's optimized to export data for later viewing. "And why is this important to note", you might think. Well, if the application was optimized for realtime usage, we would have built it in an entirely different way. What this effectively means is that you might experience some discomfort (lagging, basically..) playing back videos in the application. This is especially the case with videos with substantial file sizes.</sup>
+<!--*
+<sup>Its important to note that the VideoAnalysis is a *non-realtime analysis application* which means that it's optimized to export data for later viewing. "And why is this important to note", you might think. Well, if the application was optimized for realtime usage, we would have built it in an entirely different way. What this effectively means is that you might experience some discomfort (lagging, basically..) /playing back videos in the application. This is especially the case with videos with substantial file sizes.</sup>
+-->
 
 ## Downloads
 The application is one hundred percent open source and available on both OSX and WIN. It can be downloaded from the following places:
@@ -87,23 +137,21 @@ If you want to contribute to VideoAnaysis' development you are free to do so. Si
 
 # Trials and Tribulations
 
-Through our development, we encountered a bunch of strange problems, everything from mysterious unwanted video/image artifacts to the inability to send the app to anyone over the internet and for them to have it working without a nasty hack. In fact, we experienced so many problems that the development process resulted in the discovery of at least 2 major bugs with MaxMSP itself. Some of these were reported and readily updated/fixed in later MaxMSP version updates. So in other words, quite a lot of interesting stuff happened which I will definitely write more about in the future.
-
-One of our biggest regrets, however, is not moving the main image/video rendering from the CPU to the GPU through MaxMSP's OpenGL framework. In theory, you should always try to do video and image processing on the GPU because of its technical design. [**There's a great video on this by Federico Foderero**](https://www.youtube.com/watch?v=V3_p9R7YG-g), a MaxMSP Jitter guru, where he explains this in detail in a MaxMSP context.
-
-In VideoAnalysis 2.1, all the processing happens on the CPU. What this means is that while it's very thorough and precise, the VideoAnalysis struggles with realtime previewing and is slow to export videos of any substantial size. Originally, back in the early 2000s, it was a good idea for the app to process its content on the CPU because some of its main processes, like calculating the running mean of video pixels values, are best done serially and therefore on the CPU. Additionally, the application size smaller and the MaxMSP OpenGL framework was not nearly as powerful, well documented or supported as it is today.
-
-The reason we didn't do this from the start of our re-development process is that we didn't think the application would grow to the size ended up having. It also wasn't originally part of our job. Almost none of this was. But looking back it pains me to know that the performance of VideoAnalysis might have been exponentially better if we had spent a little more time on project management.
-
-# References
-
 <figure>
-   <img src="/assets/img/2020_07_23_va_ui1.png" alt="Alternate Text"
-   title="VideoAnalysis 2.1" width="auto" />
-   <figcaption align="middle">VideoAnalysis 2.0 main UI</figcaption>
+   <img src="/assets/img/2020_07_23_va_pianist_motiongram.jpg" alt="pianist motiongram"
+   title="pianist motiongram" width="auto" />
+   <figcaption>Motiongram of our pianist example. Here, the mean of the motion image (y-axis) is printed over time (x-axis).</figcaption>
 </figure>
 
-If you use this toolbox for research purposes, please reference this publication:
+Through our development, we encountered a bunch of strange problems. Everything from mysterious unwanted video/image artifacts to the inability to send the app to anyone over the internet and for them to have it working without a nasty hack. In fact, we experienced so many problems that the we discovered 2 major bugs with MaxMSP itself. Some of these were reported and readily updated/fixed in later MaxMSP version updates. One of the bugs we discovered was an issue with exporting images in TIFF format on Windows machines using the export features of ```[jit.matrix]```. These images would only export if their dimensions were multiples of 4.. A super weird bug, and a great find by Balint. On my current version of MaxMSP (8.1.5), the issue is still unresolved.
+
+A more fundamental issue of this development project is the fact that all of VideoAnaysis' processing happens on the CPU. What this means is that while it's very thorough and precise, the VideoAnalysis struggles with realtime previewing and is slow to export videos of any substantial size. In theory, you should always try to do video and image processing on the GPU because of its technical design. [**There's a great video on this by Federico Foderero**](https://www.youtube.com/watch?v=V3_p9R7YG-g), a MaxMSP Jitter guru, where he explains this in detail in a MaxMSP context. However, in its original 1.0 version, it was a good idea for the app to process most of its stuff on the CPU because some of its main tasks, like calculating the running mean of video pixels values, are supposedly best done serially on the CPU. Additionally, the application size was smaller and the MaxMSP OpenGL framework was not nearly as powerful, well documented or supported as it is today.
+
+The reason we didn't do this from the start of our development process is that we didn't think the application would grow to the size ended up having. It also wasn't originally part of our job. Almost none of this was. But looking back it pains me to know that the performance of VideoAnalysis might have been exponentially better if we had spent a little more time on project management. On the other hand, we cant know for sure whether an OpenGL context would significantly improve performance of this application at all. The reason being its size. The performance of a MaxMSP standalone application with the size of VideoAnaysis will depend on more than its image rendering capabilities. I guess the only way to know for sure is to test various processes and their OpenGL equivalent to better estimate whether a full transition would be worth the effort.
+
+
+# References
+If you use this application for research purposes, please reference this publication:
 
 - Jensenius, Alexander Refsum (2005). [**Developing Tools for Studying Musical Gestures within the Max/MSP/Jitter Environment**](https://www.duo.uio.no/handle/10852/26907). Proceedings of the International Computer Music Conference, p. 282-285.
 
