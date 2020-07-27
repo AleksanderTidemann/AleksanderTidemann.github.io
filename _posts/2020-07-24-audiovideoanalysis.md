@@ -104,7 +104,7 @@ The application is one hundred percent open source and available on both OSX and
 If you want to contribute to AudioVideoAnaysis' development you are free to do so. Simply fork the [**main AudioVideoAnalysis repo**](https://github.com/fourMs/AudioVideoAnalysis), clone it, develop some awesome stuff and make a pull request for us to review.
 
 
-# Trias and Tribualations
+# Trials and Tribulations
 
 <figure style="float: none;">
    <img src="/assets/img/2020_07_24_ava_motiongram.jpg" alt="Motiongram"
