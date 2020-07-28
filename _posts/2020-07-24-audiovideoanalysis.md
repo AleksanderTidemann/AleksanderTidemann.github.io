@@ -15,9 +15,9 @@ Welcome to the second installment of a three-part series on my adventures of red
    <figcaption>AudioVideoAnalysis 0.1</figcaption>
 </figure>
 
-AudioVideoAnalysis 0.1 was an application that recorded video/motiongrams and spectrograms from any available media source connected to your computer, developed by [**Alexander Refsum Jensenius**](http://people.uio.no/alexanje) in the early 2000s as a part of the [**Musical Gestures Toolbox for Max**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/musicalgesturestoolbox/mgt-max/). Its intended purpose was to provide a quick, reliable and easy way of recording and analyzing spectral content of both video and audio together on one platform.
+AudioVideoAnalysis 0.1 was an application that recorded video/motiongrams and spectrograms in realtime from any available media source, developed by [**Alexander Refsum Jensenius**](http://people.uio.no/alexanje) in the early 2000s as a part of the [**Musical Gestures Toolbox for Max**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/musicalgesturestoolbox/mgt-max/). Its intended purpose was to provide a quick, reliable and easy way of recording and analyzing spectral content of both video and audio together on one platform.
 
-My task was to update the application and replace any old dependencies with more long-term and stable solutions. In this process, I stayed true to the original design aspects and tried to improve them as much as I could hoping that it would contribute to its main purpose and inspire more people to play with spectral analysis.
+My main task was to remove any outdated dependencies the app had on old MaxMSP externals and replace them with more stable and long-term solutions, same as before. However, since the VideoAnalysis 2.1 recently had reached such a high standard, there was no chance that this application was to heed to any lesser bar. In the process, I tried to stay true to the original design improving it as much as I could in various ways.
 
 *
 <sup>Please [**visit my previous post on the VideoAnalysis**](https://aleksandertidemann.github.io/projects/2020/07/23/videoanalysis.html) to learn more about the context and history of these particular development projects.</sup>
@@ -30,10 +30,13 @@ My task was to update the application and replace any old dependencies with more
    <figcaption></figcaption>
 </figure>
 
-While (I and) [**Balint Lackzo**](https://github.com/balintlaczko) pushed the capabilities of MaxMSP Jitter with the VideoAnalysis software, we also effectively set the standard for the remaining two MaxMSP-based analysis applications still scheduled for updating, namely AudioVideoAnalysis and AudioAnalysis. Nevermind that the sole objective of these projects was to simply remove any dependencies on "old" MaxMSP externals, once the VideoAnalysis turned out the way it did there was no way the AudioVideoAnalysis could be of any lesser standard. At least in my mind, it could not. A decision that resulted in a tiresome, challenging, and extremely valuable experience altogether.
+Similar to the previous version, AudioVideoAnaysis 2.0 is intended for generating video/motiongram and spectrograms together in realtime. Spectrograms are visual representations of the frequency spectrum of an audio signal as it varies over time, ranging from 0 Hertz at the very bottom to the frequency corresponding to half of your sampling rate (for 44.1khz this is 22.05khz) at the very top. Time is then represented on the X-axis from left to right. A videogram is an image representation of a videos movement over time. therefore, we can think about the videogram as the spectrogram of the video domain. We call these representations for spectral representations because they visualize these spectrums, often referred to in audio programming as moving our attention from the time domain to the frequency domain.
 
+<!--*
+While (I and) [**Balint Lackzo**](https://github.com/balintlaczko) pushed the capabilities of MaxMSP Jitter with the VideoAnalysis software, we also effectively set the standard for the remaining two MaxMSP-based analysis applications still scheduled for updating, namely AudioVideoAnalysis and AudioAnalysis. Nevermind that the sole objective of these projects was to simply remove any dependencies on "old" MaxMSP externals, once the VideoAnalysis turned out the way it did there was no way the AudioVideoAnalysis could be of any lesser standard. At least in my mind, it could not. A decision that resulted in a tiresome, challenging, and extremely valuable experience altogether.
+-->
 ## Features
-Primarily, The AudioVideoAnalysis 2.0 differs from the 0.1 version by having more complex previewing functionalities, both before and after recording, and the ability to export images. There are a few display functionalities I believe are worth elaborating on in greater detail before giving a more general list of the application features.
+The 2.0 version of AudioVideoAnaysis features much more complex audio, video and display functionalities than its predecessor as well as the ability to export images. But speaking of display functionalities, lets take some time and look more in-depth at what the 2.0 version has grown capable of.
 
 ### Rate of Play
 An inevitable issue that arises when trying to make an application that records spectral information from one place to another is how long the printing process should take from start to finish. In other words, what should the temporal resolution (or printing rate) of our images be?

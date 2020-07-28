@@ -11,7 +11,7 @@ permalink: /About/
 </figure>
 
 * Drums, synthesizer and mus-tech with [**The Holy Mountain**](https://www.theholymountain.net/).
-* Student of the [**MCT master programme**](https://mct-master.github.io/), UiO.
+* Student of the [**MCT master programme**](https://mct-master.github.io/), UiO/NTNU.
 
 
 * Current teaching assistant at the [**Department of Musicology**](https://www.hf.uio.no/imv/english/), UiO
