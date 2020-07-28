@@ -39,7 +39,7 @@ While (I and) [**Balint Lackzo**](https://github.com/balintlaczko) pushed the ca
 The 2.0 version of AudioVideoAnaysis features much more complex audio, video and display functionalities than its predecessor as well as the ability to export images. But speaking of display functionalities, lets take some time and look more in-depth at what the 2.0 version has grown capable of.
 
 ### Rate of Play
-An inevitable issue that arises when trying to make an application that records spectral information from one place to another is how long the printing process should take from start to finish. In other words, what should the temporal resolution (or printing rate) of our images be?
+Because the application records and previews information across the X-axis of a screen in realtime, I naturally had to address whether the rate of this printing process should be fixed or modifiable by users. There are pros and cons with both methods but I settled on a modifiable printing rate because adjusting the rate of spectral images printed like this is equivalent to increasing their "temporal resolution", a valuable asset of an analysis tool like this.
 
 <figure style="float: none">
    <img src="/assets/img/2020_07_24_rate_window.jpg" alt="AVA rate"
@@ -47,14 +47,15 @@ An inevitable issue that arises when trying to make an application that records 
    <figcaption>The rate function controls the printing rate and temporal resolution of our images</figcaption>
 </figure>
 
-The AudioVideoAnalysis features a ```rate``` dial that enables any user to configure the printing rate of the images. The rate percentage corresponds to how many seconds it takes the image to go from start (x-axis min) to end (x-axis max), a value expressed explicitly under ```Total Display Time```. It's worth mentioning that this rate functionality operates by scaling down the x-dimension of our display window from a fixed maximum resolution of ```1024 x "user-specified y-dim"``` with a corresponding printing rate of 60 seconds. The feature therefore does not compensate for the consequent loss of frames. What this means is while increasing the rate might give you a much higher temporal resolution of your spectral recording, it will effectively decrease the overall image resolution.
+The printing rate is modified by using the ```rate``` dial in the applications UI, with a rate value of 100% corresponding to a time of 60 sec from start to finish. This start-to-finish time is also expressed explicitly under ```Total Display Time```.
 
-This decrease in image resolution is unfortunate but necessarily arises when we want to ensure a smooth printing process while simultaneously accommodating for relatively low frame-rates. Accommodating for low frame-rates is necessary to make the application more stable on various systems. However, to compensate for this you can alternatively set a higher video device resolution.
+It's worth mentioning that this particular rate functionality operates by zooming in on our image from an initial fixed position when the printing rate is at 100%, being a```1024 x "user-specified y-dim"``` image. What this means is while increasing the rate might give you a much higher temporal resolution of your spectral recording, it will effectively decrease the overall image resolution. I used this method because it's safe and ensures smooth printing processes while simultaneously accommodating for relatively low frame-rates. Accommodating for low frame-rates is also necessary to make the application more stable on various systems. However, setting a higher video device resolution can help compensate for some of these loses.
 
 ### Analysis Markers
+<!--*
 Another mentionable display feature in AudioVideoAnalysis is its various analysis markers. These consist of optional frequency and time markers along the XY-axis, grid view with customizable size and clickpoint data retrieval.
-
-As I introduced features like ```printing rate``` and a ```logarithmic``` dial that gives users the ability to adjust the spectrograms frequency distribution (from linear to logarithmic), the need for a set of analysis markers grew stronger. More so, it's essential to have a frame of reference when analyzing spectral images. The result was an implementation of automatically re-scaling frequency and time markers in the display window that users can add or remove from the menubar. Changing the ```Grid Size``` parameter in the UI adds and subtracts the number of analysis markers visible. Furthermore, by enabling ```View Display Grid``` in the menubar, a grid matrix is added on top of the images which can further improve our frame of reference.
+-->
+As I introduced features like printing ```rate``` and a ```logarithmic``` dial that gives users the ability to adjust the spectrograms frequency distribution (from linear to logarithmic), the need for a set of analysis markers grew stronger. More so, it's essential to have a frame of reference when analyzing spectral images. The result was an implementation of automatically re-scaling frequency and time markers in the display window accessible from the menubar. Changing the ```Grid Size``` parameter in the UI adds or subtracts the number of analysis markers visible. Furthermore, by enabling ```View Display Grid``` in the menubar, a grid matrix is added on top of the images which can further improve our frame of reference.
 
 <figure style="float: none;">
    <img src="/assets/img/2020_07_24_ava_analysis_markers.gif" alt="Grid"
@@ -62,7 +63,7 @@ As I introduced features like ```printing rate``` and a ```logarithmic``` dial t
    <figcaption> spectrogram (audio) in green and motiongram (video) in grayscale. Adding a grid to the display window can further assist analysis by providing a better frame of reference.</figcaption>
 </figure>
 
-Finally, I decided to implement something called Clickpoint Data Retrieval, allowing for an even more detailed inspection of the spectral content produced. I first came over this feature in a paper by [**Jean-Francois Charles**](https://www.jeanfrancoischarles.com/) called [**A Tutorial on Spectral Sound Processing Using Max/MSP and Jitter**](https://www.mitpressjournals.org/doi/pdf/10.1162/comj.2008.32.3.87). In this fantastically detailed and informative paper on various ways to generate and view spectral audio content in MaxMSP and Jitter, he introduces a method for retrieving Time (ms), Hz (frequency) and Amplitude (volume) from anywhere in a recorded spectrogram via physically engaging the image with our mouse.
+Finally, I decided to implement something called clickpoint data retrieval, allowing for an even more detailed inspection of the spectral audio content. I first came over this feature in a paper by [**Jean-Francois Charles**](https://www.jeanfrancoischarles.com/) called [**A Tutorial on Spectral Sound Processing Using Max/MSP and Jitter**](https://www.mitpressjournals.org/doi/pdf/10.1162/comj.2008.32.3.87). In this fantastically detailed and informative paper on various ways to generate and view spectral audio content in MaxMSP and Jitter, he introduces a method for retrieving Time (ms), Hz (frequency) and Amplitude (volume) from anywhere in a recorded spectrogram via physically engaging the image with our mouse.
 
 <figure style="float: left; margin-right: 10px;">
    <img src="/assets/img/2020_07_24_ava_clickpoint.jpg" alt="Clickpoint"
@@ -76,7 +77,7 @@ I used Jean-Francois' algorithms as the basis my implementation of this feature 
 Being able to record and preview the spectral content of both video and audio simultaneously is one of AudioVideoAnaysis' greatest strengths. With this in mind, I thought it would serve well to incorporate multiple display options that enable users to view the images in different configurations. Originally, the application presented the images layered in a cake-like fashion with video at the bottom and the audio directly above it. In the 2.0 version, we can view the images individually (only audio or only video), layered cake-wise (as before), or layered on top of each other. The latter being the most recent and interesting for exploring relationships between movement and sound.
 
 ### General
-If you want a more detailed run-through of these features, and how to use the application in general, you can access an in-depth *How To Use* guide online [**from this website**](https://github.com/fourMs/AudioVideoAnalysis/wiki) complete with lots of yummy illustrations and step-by-step instructions. And finally, a more general list of AudioVideoAnaysis' (2.0) most prominent features:
+If you want a more detailed run-through of these features, and how to use the application in general, you can access an in-depth *How To Use* guide online [**from this website**](https://github.com/fourMs/AudioVideoAnalysis/wiki) complete with lots of yummy illustrations and step-by-step instructions. Finally, a more general list of AudioVideoAnaysis' (2.0) most prominent features:
 
 * Realtime preview of visualizations
   * Detached and scalable Display Window
@@ -100,7 +101,7 @@ If you want a more detailed run-through of these features, and how to use the ap
 * Report issues straight to the developer site
 
 ## Downloads
-The application is one hundred percent open source and available on both OSX and WIN. It can be downloaded from the following places:
+The application is 100% open source and available on both OSX and WIN. It can be downloaded from the following places:
 * [**FourMS GitHub page**](https://github.com/fourMs/AudioVideoAnalysis/releases)
 * [**RITMO homepage at the University of Oslo**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/AudioVideoAnalysis/)
 
@@ -117,7 +118,7 @@ If you want to contribute to AudioVideoAnaysis' development you are free to do s
 
 The most interesting challenge of this development project was figuring out how to build it in an OpenGL context. This means using specific video objects in MaxMSP that processing images on the GPU rather than on the CPU. This was a highly relevant challenge because AudioVideoAnaysis primarily is a realtime application that should have smooth visualizations and user experiences uninterrupted by any glitches or lags. It would also be informative in understanding how we might redesign VideoAnalysis in the future.
 
-While I was able to move all the image processing within an OpenGL context in the end, I specifically struggled with a small but key process of the application design. An important component of the video/motiongram section of the application is a process that calculates the mean values for every row (x-dimension) in a frame and spits out one-dimensional matrices that we print sequentially along a "canvas" to produce the video/motiongram. When confronted with this specific process I questioned whether doing mean calculations of frames was better on the GPU or the CPU. My worry was doing these calculations on the CPU (when the rest of the application is rendered on the GPU) would generate a bottleneck that would have negative effects on the performance of the application. So in the spirit of this uncertainty, I decided to conduct some minor tests and see whether my basic assumptions were correct.
+While I was able to move all the image processing within an OpenGL context in the end, I specifically struggled with a small but key feature of the video processing. An important component of the video/motiongram section of the application is a process that calculates the mean values for every row (x-dimension) in a frame and spits out one-dimensional matrices that we print sequentially along a "canvas" to produce the video/motiongram. When confronted with this specific process I questioned whether doing mean calculations of frames was better on the GPU or the CPU. My worry was doing these calculations on the CPU (when the rest of the application is rendered on the GPU) would generate a bottleneck that would have negative effects on the performance of the application. So in the spirit of this uncertainty, I decided to conduct some minor tests and see whether my basic assumptions were correct.
 
 The CPU method of this process requires migrating the frames to the CPU, calculate the mean values there before sending the frames back to the GPU (as mentioned). So in OpenGL Jitter language, this translates to:
 ```
