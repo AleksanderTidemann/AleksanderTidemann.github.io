@@ -4,7 +4,7 @@ date: 2020-07-24
 title: "AudioVideoAnalysis"
 image: /assets/img/2020_07_24_ava_main.jpg
 categories: Projects
-excerpt: "A standalone application for realtime spectral analysis of audio and video, developed in collaboration with RITMO (Center for Interdisciplinary Studies in Rhythm, Time and Motion) and the FourMS lab at the University of Oslo."
+excerpt: "A standalone application for realtime spectral analysis of audio and video, redeveloped by myself in collaboration with RITMO (Center for Interdisciplinary Studies in Rhythm, Time and Motion) and the FourMS lab at the University of Oslo."
 ---
 
 Welcome to the second installment of a three-part series on my adventures of redeveloping the [**Musical Gestures Toolbox for Max**](https://www.uio.no/ritmo/english/research/labs/fourms/downloads/software/musicalgesturestoolbox/mgt-max/) for the University of Oslo*. This post presents the AudioVideoAnalysis 2.0, a MaxMSP standalone application for realtime spectral analysis of audio and video I developed in collaboration with the [**RITMO center for interdisciplinary studies in rhythm, time and motion)**](https://www.uio.no/ritmo/english/) and their [**FourMS lab**](https://www.uio.no/ritmo/english/research/labs/fourms/) at the University of Oslo, spring 2020.
