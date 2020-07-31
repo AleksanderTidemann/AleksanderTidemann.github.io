@@ -119,7 +119,7 @@ The most interesting challenge of this development project was figuring out how 
 
 While I was able to move all the image processing within an OpenGL context in the end, I specifically struggled with a small but key feature of the video processing. An important component of the video/motiongram section of the application is a process that calculates the mean values for every row (X-dimension) in a frame and spits out one-dimensional matrices that we print sequentially along a "canvas" to produce the video/motiongram. When confronted with this specific process I questioned whether doing mean calculations of frames was better on the GPU or the CPU. My worry was doing these calculations on the CPU (when the rest of the application is rendered on the GPU) would generate a bottleneck that would have negative effects on the performance of the application. So in the spirit of this uncertainty, I decided to conduct some minor tests and see whether my basic assumptions were correct.
 
-The CPU method of this process requires migrating the frames to the CPU, calculate the mean values there before sending the frames back to the GPU (as mentioned). So in OpenGL Jitter language, this translates to:
+The CPU method of this process requires migrating the frames to the CPU and calculate the mean values there before sending the frames back to the GPU (as mentioned). In OpenGL Jitter language, this translates to:
 ```
 [jit.gl.asyncread] //migrate video processing from GPU to CPU
 [xray.jit.mean @mean 1 @meandim 0] //calculate horizontal mean values
