@@ -139,7 +139,7 @@ If you want to contribute to VideoAnaysis' development you are free to do so. Si
 <figure>
    <img src="/assets/img/2020_07_23_va_pianist_motiongram.jpg" alt="pianist motiongram"
    title="pianist motiongram" width="auto" />
-   <figcaption>Motiongram of our pianist example. Here, the mean of the motion image (y-axis) is printed over time (x-axis).</figcaption>
+   <figcaption>Motiongram of our pianist example. Here, the mean of the motion image (Y-axis) is printed over time (X-axis). The obvious concentration of movement is at the center of the image, where the hands are located, but we also notice quite a bit of movement in the leg and head areas. </figcaption>
 </figure>
 
 Through our development, we encountered a bunch of strange problems, everything from mysterious unwanted video/image artifacts to the inability to send the app to anyone over the internet and for them to have it working without a nasty hack. In fact, we experienced so many problems that we discovered 2 major bugs with MaxMSP itself. One of these bugs was reported and readily updated/fixed in a later MaxMSP version update, but the other has yet to be. The "have-yet-to-be-fixed" bug is an issue with exporting images/matrices in TIFF format on Windows machines. For some reason, these images will only export if their dimensions are multiples of 4... A super weird bug, and a great find by Balint. Now that we knew why we couldn't export TIFF formatted images on Windows machines, we could create a hack the enabled us to.
