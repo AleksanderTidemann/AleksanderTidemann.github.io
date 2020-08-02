@@ -2,6 +2,7 @@
 layout: post
 title:
 permalink: /About/
+comments: false
 ---
 
 <figure style="float: left; margin-right: 50px;">
@@ -9,7 +10,6 @@ permalink: /About/
    title="Aleksander Tidemann" width="200"/>
    <figcaption></figcaption>
 </figure>
-
 
 Drummer, digital music lover, media technology explorer and space enthusiast. I Currently study music and communications technologies at the [**MCT masters programme**](https://mct-master.github.io/), create music with [**The Holy Mountain**](https://www.theholymountain.net/), and work as a teaching assistant for the [**Department of Musicology**](https://www.hf.uio.no/imv/english/) at the University of Oslo.
 
