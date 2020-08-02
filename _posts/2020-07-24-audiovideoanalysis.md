@@ -93,9 +93,8 @@ If you want a more detailed run-through of these features, and how to use the ap
   * Customize the rate (display length in seconds) of image printing
   * Add analysis grid and markers (frequency and time) with dynamic grid size
 * Export the recorded images
-* Dynamic control spectrograms logarithmic curve (linear to logarithmic)
+* Dynamically adjust spectrograms logarithmic curve (from linear to logarithmic)
 * Spectral blurring effect (audio)
-* GPU images processing
 * In-depth *How to use* guide
 * Report issues straight to the developer site
 
