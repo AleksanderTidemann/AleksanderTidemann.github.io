@@ -125,19 +125,20 @@ The CPU method of this process requires migrating the frames to the CPU and calc
 [jit.gl.texture @dim "original dim"] //migrate back to GPU
 ```
 
-On the other hand, if we wanted to do the same process on the GPU, we would simply need to recreate the ```[xray.jit.mean]``` object in OpenGL. I figured that the easiest way to do this would be to use a for-loop inside a ```[jit.gl.pix]``` object. However, since hard coding in the OpenGL object only supports the notoriously ambiguous and frustrating GenExpr programming language, I was fortunate enough to receive some aid from a great 3D graphics artist and avid MaxMSP Jitter user named [**Federico Foderero**](https://www.federicofoderaro.com/). Federico expanded on this idea himself [**and made a video**](https://www.youtube.com/watch?v=hcHyiSKLpUA&list=UUvDUaH2fbXP_Yc5Lc9UXfqA) where we explore numerous ways of using an OpenGL equivalent of ```[xray.jit.mean]```. Anyway, we can recreate this object using this GenExpr code:       
+On the other hand, if we wanted to do the same process on the GPU, we would simply need to recreate the ```[xray.jit.mean]``` object in OpenGL. I figured that the easiest way to do this would be to use a for-loop inside a ```[jit.gl.pix]``` object. We can code inside MaxMSP's Gen environment using the GenExpr programming language. Luckily, at this stage, I was fortunate enough to receive some aid from a great 3D graphics artist and avid Max/MSP/Jitter user named [**Federico Foderero**](https://www.federicofoderaro.com/). Federico helped me with the specific syntax needed for these lines of code and later expanded on my idea of creating an OpenGL equivalent of ```[xray.jit.mean]``` himself in [**this video**](https://www.youtube.com/watch?v=hcHyiSKLpUA&list=UUvDUaH2fbXP_Yc5Lc9UXfqA). To do the necessary mean calculations on OpenGL textures we can use this GenExpr code:     
 
 ```
 main = vec(0,0,0,0);
 
-if (cell.x > 0) {
-	for (i=0; i<dim.x; i+=1) {
-		main += nearest(in1, vec(i/dim.x, norm.y));
-	}
-	main /= dim.x;		
+if (cell.x) {
+  for (i=0; i<dim.x; i+=1) {
+    main += nearest(in1, vec(i/dim.x, norm.y));
+  }
+  main /= dim.x;		
 }
 out1 = main;
 ```
+The code iterates through every row of an incoming frame and gathers all its pixel information in a vector (main), before finally dividing the vector by the size of the horizontal dimension (dim.x).
 
 In the end, I chose to use the CPU method in AudioAnalysis 2.0 because I kept reading that this was standard practice for dealing with calculations of this kind. However, when later comparing the two methods, I was not convinced that the CPU version was the best practice in my particular case. The reason is that I experienced very little or no performance differences whatsoever between the two methods. On the other hand, It's worth noting that this effect can be attributed to numerous other factors like battery life, hardware configs of different laptops and application size. Since this subject requires much more testing to say anything for sure, I will dedicate an upcoming post to discussing and researching this matter more in-depth.
 
