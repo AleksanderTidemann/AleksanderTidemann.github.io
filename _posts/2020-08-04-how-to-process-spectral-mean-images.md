@@ -1,26 +1,26 @@
 ---
 layout: post
 date: 2020-08-04
-title: "How to process Spectral Mean Images in Max/MSP/Jitter using OpenGL"
-image: /assets/img/2020_08_04_spectral_main2.jpg
+title: "Exploring Spectral Mean Images in Max/MSP/Jitter using OpenGL"
+image: /assets/img/2020_08_04_spectral_main_gif.gif
 categories: General
 excerpt: "In this post, I conduct an experiment to determine what the most effective system is for recording and previewing spectral images of motion over time in Max/MSP/Jitter using an OpenGL framework."
 Keywords: MaxMSP, OpenGL, Jitter, spectral mean images, analysis, motiongram, videogram
 ---
 <!--*
+-->
 <figure style="float: none">
-   <img src="/assets/img/2020_08_04_spectral_main2.jpg" alt="main"
+   <img src="/assets/img/2020_08_04_spectral_main_gif.gif" alt="main"
    title="main" width="640" />
    <figcaption></figcaption>
 </figure>
--->
 
-As the title might suggest, in this post we will investigate what the most optimal and effective system is for recording and previewing spectral mean images (motiongrams) in Max/MSP/Jitter using an OpenGL framework. I was motivated to explore this specific topic in-depth after running into some challenges while redeveloping an application that analyzes the spectral content of video and audio for the [**RITMO Centre for Interdisciplinary Studies in Rhythm, Time and Motion**](https://www.uio.no/ritmo/english/) at the University of Oslo, called AudioVideoAnalysis. I've written [**an entire post**](https://aleksandertidemann.github.io/projects/2020/07/24/audiovideoanalysis.html) about this application earlier so be sure to check it out if you're interested.
+As the title might suggest, in this post I investigate what the most optimal and effective system is for recording and previewing spectral mean images (motiongrams) in Max/MSP/Jitter using an OpenGL framework. I was motivated to explore this specific topic in-depth after running into some challenges while redeveloping an application that analyzes the spectral content of video and audio for the [**RITMO Centre for Interdisciplinary Studies in Rhythm, Time and Motion**](https://www.uio.no/ritmo/english/) at the University of Oslo, called AudioVideoAnalysis. I've written [**an entire post**](https://aleksandertidemann.github.io/projects/2020/07/24/audiovideoanalysis.html) about this application earlier so be sure to check it out if you're interested.
 
-My investigation consists of an experiment where I designed and tested several of these OpenGL spectral mean image-producing systems in Max/MSP/Jitter to determine which was most effective. After briefly on elaborating on the background and method of this experiment, I will discuss the results before finally presenting the winning system(!)
+My investigation consists of an experiment where I designed and tested several of these OpenGL spectral mean image-producing systems in Max/MSP/Jitter to determine which was most effective. After briefly elaborating on the background and method of this experiment, I will discuss the results before finally presenting the winning system(!)
 
 # Background
-Spectral mean images are representations of movement over time. These images are created by calculating the vector mean values of either every row or column of an incoming matrix, depending on if we want to represent time on the horizontal or vertical axis, and subsequently printing the outputted one-dimension matrices across a canvas or display.
+Spectral mean images are representations of movement over time. These images are created by calculating vector mean values of either every row or column of an incoming matrix (depending on if we want to represent time on the horizontal or vertical axis) before printing the outputted one-dimensional matrices across a canvas.
 
 <figure style="float: none">
    <img src="/assets/img/2020_08_04_spectral_motiongram_diagram.jpg" alt="motiongram diagram"
