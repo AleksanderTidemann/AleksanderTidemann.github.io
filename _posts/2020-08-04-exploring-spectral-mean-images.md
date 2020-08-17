@@ -398,4 +398,4 @@ out1 = xdim;
 
 ## Download
 
-The source code for these spectral mean image systems are readily available at my [**GitHub page**](), so feel free to also enhance, change and/or explore!
+The source code for these spectral mean image systems are readily available at my [**GitHub page**](https://github.com/AleksanderTidemann/opengl-spectral-image-processing), so feel free to also enhance, change and/or explore!
