@@ -4,7 +4,7 @@ date: 2020-08-04
 title: "Exploring Spectral Mean Images in Max/MSP/Jitter using OpenGL"
 image: /assets/img/2020_08_04_spectral_main_gif.gif
 categories: General
-excerpt: "In this post, I conduct an experiment to determine what the most effective system is for processing real-time spectral images of motion over time in Max/MSP/Jitter using an OpenGL framework."
+excerpt: "In this post, I experiment to determine what the most effective system is for processing real-time spectral images of motion over time in Max/MSP/Jitter using an OpenGL framework."
 Keywords: MaxMSP, OpenGL, Jitter, spectral mean images, analysis, motiongram, videogram
 ---
 <!--*
@@ -36,32 +36,32 @@ If we produce a spectral mean image from a motion image, we have something calle
    <figcaption>Three horizontal motiongrams. Image retrieved from <a href="https://www.hf.uio.no/imv/english/research/projects/mg/subprojects/motiongrams/"><b>UiO</b></a></figcaption>
 </figure>
 
-In the outdated version of AudioVideoAnalysis, the application I was tasked to whip into shape, this mean calculating process was handled by a MaxMSP external object called ```[xray.jit.mean]```. The XRAY external package was developed by Wesley Smith ([**read more here**](https://cycling74.com/forums/get-the-xray-package-by-wesley-smith/)) and is a set of jitter objects that do video processing on the CPU, the same way every other jitter object in MaxMSP operates. However, when dealing with graphics and video processing in MaxMSP today, it's highly recommended you "wrap your code" in something called an OpenGL context that enables your GPU to take care of all the graphical processing. OpenGL (Open Graphics Library) is a cross-platform graphics interface for 3D and 2D graphics and is often considered an industry standard in digital graphics circles. Because of this, I wanted the new version of AudioVideoAnalysis to have OpenGL image rendering. However, this gave rise to an interesting problem:
+In the outdated version of AudioVideoAnalysis, the application I was tasked to whip into shape, this mean-calculating process was handled by a MaxMSP external object called ```[xray.jit.mean]```. The XRAY external package was developed by Wesley Smith ([**read more here**](https://cycling74.com/forums/get-the-xray-package-by-wesley-smith/)) and is a set of jitter objects that do video processing on the CPU, the same way every other jitter object in MaxMSP operates. However, when dealing with graphics and video processing in MaxMSP today, it's highly recommended you "wrap your code" in something called an OpenGL context that enables your GPU to take care of all the graphical processing. OpenGL (Open Graphics Library) is a cross-platform graphics interface for 3D and 2D graphics and is often considered an industry-standard in digital graphics circles. Because of this, I wanted the new version of AudioVideoAnalysis to have OpenGL image rendering. However, this gave rise to an interesting problem:
 
 > **Should an OpenGL system that generates real-time spectral mean images (or motiongrams) in Max/MSP/Jitter do vector mean calculations on the CPU or the GPU?**
 
 # The Problem Explained
 When doing computationally expensive tasks like calculating thousands (if not millions) of mathematical operations many times per second, as our system demands, the general norm is that these operations should be executed on the CPU. This is because the CPU is specifically designed for these kinds of tasks while the GPU is more optimized to deal with graphics. [**There's a great video**](https://www.youtube.com/watch?v=V3_p9R7YG-g) on the pros and cons of processing video in Max/MSP/Jitter on the CPU vs. the GPU by Federico Foderero. Be sure to check it out if you're interested in learning more.
 
-With these facts considered, it seems obvious that the mean calculations in question should be executed on the CPU. However, according to official documentation on the [**Best Practices in Jitter**](https://cycling74.com/tutorials/best-practices-in-jitter-part-1), there is reason to doubt that this is best practice in our particular case. The Cycling74 article states that if you transition from OpenGL jitter to regular jitter (from the GPU to the CPU) you should use specific readback and downsampling methods that minimize data copies between the processing units. What this essentially means is that you risk creating a bottleneck in your processing chain if you continually transition heavy loads between units.
+With these facts considered, it seems obvious that the mean calculations in question should be executed on the CPU. However, according to the official documentation on the [**Best Practices in Jitter**](https://cycling74.com/tutorials/best-practices-in-jitter-part-1), there is reason to doubt that this is best practice in our particular case. The Cycling74 article states that if you transition from OpenGL jitter to regular jitter (from the GPU to the CPU) you should use specific readback and downsampling methods that minimize data copies between the processing units. What this essentially means is that you risk creating a bottleneck in your processing chain if you continually transition heavy loads between units.
 
-Therefore, with this risk in mind, I wondered whether keeping all of the processing for my application on the GPU would be more effective than migrating some of the math heavy tasks to and from the CPU.
+Therefore, with this risk in mind, I wondered whether keeping all of the processing for my application on the GPU would be more effective than migrating some of the math-heavy tasks to and from the CPU.
 
 # Method
-To explore this question, I designed an experiment with the explicit purpose of testing this assumption further. The experiment consisted of testing three different OpenGL spectral mean image systems in two different configurations on two different machines. Testing was conducted on one system at a time (on both machines) in two rounds. First round with a high resolution image (1280x720) and the second round with a much lower resolution (320x240).
+To explore this question, I designed an experiment with the explicit purpose of testing this assumption further. The experiment consisted of testing three different OpenGL spectral mean image systems in two different configurations on two different machines. Testing was conducted on one system at a time (on both machines) in two rounds. First-round with a high-resolution image (1280x720) and the second round with a much lower resolution (320x240).
 
 ### Systems
 1. The first system uses a readback method to process the mean calculation on the CPU via ```[xray.jit.mean]```. From now, we refer to this system as the **XRAY method**.  
 
 2. The second system uses a ```[jit.gl.pix]``` (an OpenGL object in MaxMSP) and some GenExpr code to process the mean calculations on the GPU. From now, we refer to this system as the **GPU method**.  
 
-3. The third system uses the same readback method as system one, but instaed uses a ```[jit.pix]``` (a regular jitter object in MaxMSP) with the same GenExpr code from system two to process the mean calculation on the CPU. From now, we refer to this system as the **PIX method**.
+3. The third system uses the same readback method as system one, but instead uses a ```[jit.pix]``` (a regular jitter object in MaxMSP) with the same GenExpr code from system two to process the mean calculation on the CPU. From now, we refer to this system as the **PIX method**.
 
 ### Configurations
 
-1. In the first configuration we test the systems on their own. In other words, in an isolated fashion. From now, we refer to this configuration as an **isolated configuration**.
+1. In the first configuration, we test the systems on their own. In other words, in an isolated fashion. From now, we refer to this configuration as an **isolated configuration**.
 
-2. In the second configuration we test the systems as part of a bigger system. Here, I modified three version of the AudioVideoAnalysis 2.0, each with its own dedicated system. From now, we refer to this system as the **AVA configuration**.
+2. In the second configuration, we test the systems as part of a bigger system. Here, I modified three versions of the AudioVideoAnalysis 2.0, each with a dedicated system. From now, we refer to this system as the **AVA configuration**.
 
 <figure style="float: left; margin-left: 10px;">
   <img src="/assets/img/2020_08_04_spectral_app.jpg"
@@ -76,7 +76,7 @@ To explore this question, I designed an experiment with the explicit purpose of 
 </figure>
 
 ### Machines
-Since one of my goal also was to find a system that would be "universally" stable, I decided to only use middle/low-grade machines with standard integrated Intel Graphics cards in testing. However, having the ability to switch to a NVIDIA Quadro T2000 GPU on my Lenovo Thinkpad will be valuable to get better perspectives on the performance of particular systems.
+Since one of my goals was to find a system that would be "universally" stable, I decided to only use middle/low-grade machines with standard integrated Intel Graphics cards in testing. However, having the ability to switch to an NVIDIA Quadro T2000 GPU on my Lenovo Thinkpad will be valuable to get better perspectives on the performance of particular systems.
 
 * **Lenovo Thinkpad P53**
   * 2.6 GHz Intel Core i7 9th gen six-cores
@@ -97,17 +97,17 @@ Since one of my goal also was to find a system that would be "universally" stabl
   * Integraded Webcamera with up to 1280x720 resolution.
 
 ### Test Conditions
-* **High and low resolution video** - To generate video-feed, I used each machines dedicated web-camera. For consistency, I conducted all tests with the same high resolution image (1280x720). Additionally, each system in each configuration had their own *downsample* trigger that downsampled the video-feed (1280x720) to 320x240. The purpose of this downsampling is to help generate a more holistic and better understanding of how each method performs overall.  
+* **High and low-resolution video** - To generate video-feed, I used the dedicated web-camera on each machine. For consistency, I conducted all tests with the same high-resolution image (1280x720). Additionally, each system in each configuration had a *downsample* trigger that downsampled the video-feed (1280x720) to 320x240. The purpose of this downsampling is to help generate a more holistic and better understanding of how each method performs overall.  
 
-  * **Performance on low battery** - I checked how each system behaved on machines with low battery because laptops often behave and prioritize differently when in this condition. More so, the better a system performs on low battery the more stable it is. A high score on this condition means the system performed WELL on low battery.
+  * **Performance on low battery** - I checked how each system behaved on machines with low-battery because laptops often behave and prioritize differently when in this condition. More so, the better a system performs on low battery the more stable it is. A high score on this condition means the system performed WELL on low-battery.
 
   * **General GPU/CPU load** - An important (if not the most important) part of the testing was to monitor how each system stressed its dedicated processing unit. A high score in this category means the system did NOT stress the unit much.
 
   * **Various audio parameter settings** - I use audio (MSP) signals as system clocks. Therefore, MSP controls the printing rate of our systems. We should therefore test whether adjusting some parameters, like the I/O Vector Size and the Vector Size, affects performance in any way.
 
-  * **FPS (Frames Per Second)** - The FPS value will always be closely linked to the *GPU/CPU load* and *audio parameter* categories. Basically, the higher FPS a system achieves, the better the system is. However, I designed each system to have a maximum limit of 60 FPS. It's important to have a max limit because we want to be able to design a clock source whose rate we can ensure will always exceed the current FPS value.
+  * **FPS (Frames Per Second)** - The FPS value will always be closely linked to the *GPU/CPU load* and *audio parameter* categories. The higher the FPS, the better the system is. However, I designed each system to have a maximum limit of 60 FPS. It's important to have a max limit because we want to be able to design a clock source whose rate we can ensure will always exceed the current FPS value.
 
-  * **Image Clarity** - A well-performing system in my experiment is a system that shows few or no lags, does not crash (often), and most importantly has a low occurrence of missing/blank frames. These aesthetical aspects is what evaluate and rate through Image Clarity category.
+  * **Image Clarity** - A well-performing system in my experiment is a system that shows few or no lags, does not crash (often), and most importantly has a low occurrence of missing/blank frames. These aesthetical aspects are what I evaluate and rate through the Image Clarity category.
 
 ### Clock
 As briefly mentioned, the systems use MSP (audio) signals as their main clock source/counter mechanism. Therefore, it's essential to define a set of fixed audio parameter settings beforehand. The clock determines how fast the images are printed across the display as it provides printing coordinates for the incoming one-dimensional images. There are many ways to build counter mechanisms in Max/MSP/Jitter, but I decided to use MSP in this experiment because it's a fast(!), stable, highly controllable and quite reliable clock source.
@@ -122,11 +122,11 @@ The ```I/O Vector Size``` controls the number of samples that are transferred to
 
 The ```Signal Vector Size``` in Max/MSP/Jitter determines the number of samples that are calculated by MSP objects at any one time. Although [**it's documented**](https://docs.cycling74.com/max5/tutorials/msp-tut/mspaudioio.html) that variations in signal vector size only have slight effects on CPU performance, a larger vector size will nevertheless reduce some load. Considering that the systems opt for a maximum framerate of 60 FPS (one frame every 16ms), I could theoretically bring my signal vector size up to 256 ("outputting" a new vector every 5,8ms) without problems, given a sampling rate of 44.1Khz.
 
-In addition to having a fixed I/O vector size, signal vector size and sampling rate, each system used internal sound cards as main audio drivers. With these audio parameter settings I could be confident that the frame rates would never exceeded the counter signal rate. However, there is more to be said about how the counter mechanism is designed. More on this in the upcoming section.
+In addition to having a fixed I/O vector size, signal vector size and sampling rate, each system used internal sound cards as main audio drivers. With these audio parameter settings, I could be confident that the frame rates would never exceed the counter signal rate. However, there is more to be said about how the counter mechanism is designed. More on this in the upcoming section.
 
 # System Design
 
-Creating a system that explores spectral mean images requires more than just a method for vector mean calculation. In this section I will explain which key processes are necessary to build these system, with the **isolated system configuration** as my focal point, before I go in-depth on how each of the different mean calculating methods are constructed.
+Creating a system that explores spectral mean images requires more than just a method for vector mean-calculation. In this section, I will explain which key processes are necessary to build these systems, with the **isolated system configuration** as my focal point, before I go in-depth on how each of the different mean-calculating methods are constructed.
 
 ### Overview
 
@@ -136,13 +136,13 @@ Creating a system that explores spectral mean images requires more than just a m
   <figcaption>System overview. The objects in blue are abstractions which grab the video-feed (at.webcam), create a motion image (at.vg.mg.selector), provide a counting mechanism (at.imaginary.fft.counter) and finally calculates the vector means (at.gl.mg.cpu/gpu). All systems are created in Max/MSP/Jitter version 8.1.5</figcaption>
 </figure>
 
-In the image above, notice the ```[jit.gl.layer]``` and ```[jit.world]``` objects. By setting the @fps attribute to 60 in the [jit.world] object, I can determine the systems maximum framerate. Alternatively, I could set the @interval attribute to 17 that would determine the maximum time interval (in milliseconds) between consecutive frames. The [jit.gl.layer] object sends content that is to be rendered on the screen to the [jit.world]. Here, It's important to make explicit that I want to preserve the aspect ratio of the incoming image (@perserve_aspect 1) and that I want the image to be automatically scaled to fit the entire display window at any given time (@transform_reset 2).
+In the image above, notice the ```[jit.gl.layer]``` and ```[jit.world]``` objects. By setting the @fps attribute to 60 in the [jit.world] object, I can determine the systems' maximum framerate. Alternatively, I could set the @interval attribute to 17 that would determine the maximum time interval (in milliseconds) between consecutive frames. The [jit.gl.layer] object sends content that is to be rendered on the screen to the [jit.world]. Here, It's important to make explicit that I want to preserve the aspect ratio of the incoming image (@perserve_aspect 1) and that I want the image to be automatically scaled to fit the entire display window at any given time (@transform_reset 2).
 
 <!--*
 overdrive off(!) because we are doing video processing.
 -->
 
-To access my machines web-camera, and to make it output video information in a OpenGL context, I use the ```[jit.qt.grab]```object with the @output_texture attribute set to 1. This object is located inside the blue [at.webcam] abstraction, shown in the image above. At this stage, I also enable the @unique attribute to makes sure no identical frames are outputted, a feature that's important for the next step which is creating a motion image.
+To access the web-cameras, and to make it output video information in an OpenGL context, I use the ```[jit.qt.grab]```object with the @output_texture attribute set to 1. This object is located inside the blue [at.webcam] abstraction, shown in the image above. At this stage, I also enable the @unique attribute to makes sure no identical frames are outputted, a feature that's important for the next step which is creating a motion image.
 
 ### Motion image
 
@@ -152,9 +152,9 @@ To access my machines web-camera, and to make it output video information in a O
   <figcaption>To create a motion image we calculate the difference between two frames. This image is a representation of what's inside the [at.vg.mg.selector] abstraction, seen in blue in the overview image above.</figcaption>
 </figure>
 
-As mentioned, a motion image is the result of calculating the difference between two consecutive frames. To do this in an OpenGL context, we can split and flip the order of frames before passing them through a [absdiff] object inside a ```[jit.gl.pix]``` object. Having the @unique attribute enabled in the [jit.qt.grab] is essential because we never want to calculate the difference between two equal frames. This would result in an undesired amount of black/missing frames in our rendered spectral image.
+As mentioned, a motion image is a result of calculating the difference between two consecutive frames. To do this in an OpenGL context, we can split and flip the order of frames before passing them through a [absdiff] object inside a ```[jit.gl.pix]``` object. Having the @unique attribute enabled in the [jit.qt.grab] is essential because we never want to calculate the difference between two equal frames. This would result in an undesired amount of black/missing frames in our rendered spectral image.
 
-At this stage I also added 2 optional noise filters (binary and unary) that can be used to optimize the quality of the motion image. Finally, I set the systems data type to float32 (storing 32-bit floating point values) to ensure greater processing precision down the line.
+At this stage, I also added 2 optional noise filters (binary and unary) that can be used to optimize the quality of the motion image. Finally, I set the systems data type to float32 (storing 32-bit floating-point values) to ensure greater processing precision down the line.
 
 ### Printing Rate
 
@@ -164,13 +164,13 @@ At this stage I also added 2 optional noise filters (binary and unary) that can 
   <figcaption>By making the counter length/size the same as the horizontal dimension (X-dim) of the rendered image, I can control the printing rate by adjusting the X-dim size. This image is a representation of what's inside the [at.imaginary.fft.counter] abstraction, seen in blue in the overview image above.</figcaption>
 </figure>
 
-For simplicities' sake, I decided to adapt a technique I used in the [**AudioVideoAnalysis application**](https://aleksandertidemann.github.io/projects/2020/07/24/audiovideoanalysis.html) to manage the printing rate of my spectral images. This design is based on MSP (audio signals) and uses specific FFT parameters, originally used to control the printing rate of a spectrogram, as its points of reference.
+For simplicities' sake, I decided to adopt a technique I used in the [**AudioVideoAnalysis application**](https://aleksandertidemann.github.io/projects/2020/07/24/audiovideoanalysis.html) to manage the printing rate of my spectral images. This design is based on MSP (audio signals) and uses specific FFT parameters, originally used to control the printing rate of a spectrogram, as its points of reference.
 
 In this method, I can adjust the rate of the printing by manipulating a dial that outputs normalized values ranging from 0 to 1. These values are then used to configure the size of the horizontal dimension (X-dim) of the rendered image, as well as to extract the printing time (in seconds). However, this requires us to have a fixed X-dim range, a range which I determined to be from 100 to 1024.
 
-Furthermore, I set the fundamental MSP ```[count~]``` object to count between a range of 0 and 5291926,6 because this number divided by 5167.9 (an essentially arbitrary number) amounts to a range from 0 to 1024 (our max X-dim) where one cycle is made every 60 seconds, presuming the samplerate is 44.1Khz. Next I compensated for an FFT Hopsize of 4 by simply multiplying the entire signal by 2 before allowing the maximum value of the counting range to de decided by the newly configured X-dim size.
+Furthermore, I set the fundamental MSP ```[count~]``` object to count between a range of 0 and 5291926,6 because this number divided by 5167.9 (an essentially arbitrary number) amounts to a range from 0 to 1024 (our max X-dim) where one cycle is made every 60 seconds, presuming the sample rate is 44.1Khz. Next, I compensated for an FFT Hopsize of 4 by simply multiplying the entire signal by 2 before allowing the maximum value of the counting range to de decided by the newly configured X-dim size.
 
-The overall take-away here is that I adjust the printing rate by effectively "zooming in" on the spectral images. Not a particularly elegant method, but an effective one.
+The overall takeaway here is that I adjust the printing rate by effectively "zooming in" on the spectral images. Not a particularly elegant method, but an effective one.
 
 <figure style="float: none">
   <img src="/assets/img/2020_08_04_spectral_printing.jpg"
@@ -188,10 +188,10 @@ The final counter values are then sent to another ```[jit.gl.pix]``` object wher
   <figcaption>This method uses [jit.gl.asyncread] and [xray.jit.mean] in succession to readback an openGL texture to the CPU before performing the necessary mean calculations there. This image is a representation of what's inside the [at.gl.mg.cpu] abstraction, seen in blue in the overview image above</figcaption>
 </figure>
 
-As briefly mentioned in the Methods section, the **XRAY method** system uses a ```[xray.jit.mean]``` object to process vector mean calculations on the CPU*. In addition, I used an object called ```[jit.gl.asyncread]``` that is specifically design to handle readbacks from an OpenGL framebuffer and is therefore a considerable advantage to any video processing chain that seeks to migrate stuff from the GPU to the CPU. Finally, I send the video processing back to the GPU by feeding the CPU matrix into a ```[jit.gl.texture]``` harboring our the vertical dimension of my current web-camera resolution and the horizontal dimension controlled by my current printing rate.
+As briefly mentioned in the Methods section, the **XRAY method** system uses a ```[xray.jit.mean]``` object to process vector mean-calculations on the CPU*. Also, I used an object called ```[jit.gl.asyncread]``` that is specifically design to handle readbacks from an OpenGL framebuffer and is therefore a considerable advantage to any video processing chain that seeks to migrate stuff from the GPU to the CPU. Finally, I send the video processing back to the GPU by feeding the CPU matrix into a ```[jit.gl.texture]``` harboring the vertical dimension of my current web-camera resolution and the horizontal dimension controlled by my current printing rate.
 
 *
-<sub>This object is not part of the standard Max/MSP/Jitter library so it has to downloaded as part of the "XRAY package" from Max' dedicated package manager.</sub>
+<sub>This object is not part of the standard Max/MSP/Jitter library so it has to be downloaded as part of the "XRAY package" from Max' dedicated package manager.</sub>
 
 ## GPU method
 
@@ -218,7 +218,7 @@ out1 = main;
 ```
 
 ## PIX method
-The **PIX method** is somewhat of a hybrid between the XRAY and GPU methods. The idea here is to basically implement the same **GPU method**, with a GenExpr for-loop inside a codebox, but run it on the CPU instead. We can easily do this in Max by removing the "gl" tag in the [jit.gl.pix] object to create a ```[jit.pix]```object. However, as mentioned, it's important we use a [jit.gl.asyncread] whenever we want to migrate operations from the GPU to the CPU. The general recipe of this mean calculating method looks like this:
+The **PIX method** is somewhat of a hybrid between the XRAY and GPU methods. The idea here is to implement the same **GPU method**, with a GenExpr for-loop inside a codebox, but run it on the CPU instead. We can easily do this in Max by removing the "gl" tag in the [jit.gl.pix] object to create a ```[jit.pix]```object. However, as mentioned, we must use a [jit.gl.asyncread] whenever we want to migrate operations from the GPU to the CPU. The general recipe of this mean calculating method looks like this:
 
 ```
 [jit.gl.asyncread] //Readback from GPU to CPU
@@ -226,10 +226,10 @@ The **PIX method** is somewhat of a hybrid between the XRAY and GPU methods. The
 [jit.gl.texture] //back to the GPU
 ```
 
-This method also gives me the opportunity to closer inspect how the GenExpr language performs and if there's any significant difference when executing it on the CPU vs. the GPU.
+This method also allows me to closer inspect how the GenExpr language performs and if there's any significant difference when executing it on the CPU vs. the GPU.
 
 # Results
-When testing each method, I rated them on a scale from 0-10 in each test conditions except for the audio parameter category. In this cateory, a rating of 1 indicates *"yes, changing the audio settings did effect performance"* while 0 indicates *"no, changing the audio settings did not effect performance"*.
+When testing each method, I rated them on a scale from 0-10 in each test conditions except for the audio parameter category. In this category, a rating of 1 indicates *"yes, changing the audio settings did affect performance"* while 0 indicates *"no, changing the audio settings did not affect performance"*.
 
 ## XRAY Method
 
@@ -239,9 +239,9 @@ When testing each method, I rated them on a scale from 0-10 in each test conditi
   <figcaption>Test results for using the XRAY method to calculate mean values when processing spectral images. The higher the score, the better the performance. </figcaption>
 </figure>
 
-Not surprisingly, the overall performance of the **XRAY method** was good in both configurations. However, when displaying high resolution images (1280x720) in the AVA configuration, its performance did depended on which machine I was using. On my early 2011 Macbook pro, processing high resolution images in this configuration resulted in a steady accumulation of blank/missing frames here and there. However, on my more powerful Thinkpad, both resolutions created usable and consisted motion images overall.  
+Not surprisingly, the overall performance of the **XRAY method** was good in both configurations. However, when displaying high-resolution images (1280x720) in the AVA configuration, its performance did depended on which machine I was using. On my early 2011 Macbook pro, processing high-resolution images in this configuration resulted in a steady accumulation of blank/missing frames here and there. However, on my more powerful Thinkpad, both resolutions created usable and consistent motion images overall.  
 
-But regardless of some performance discrepancies when pushing the system quite hard, the overall load of the **XRAY method** applications was surprisingly low with only 5-10% increase in CPU utilization from processing downsampled (320x240) to high resolution images (1280x720). Similarly, running the applications on machines with low battery had little or no effect on their performance.  
+But regardless of some performance discrepancies when pushing the system quite hard, the overall load of the **XRAY method** applications was surprisingly low with only a 5-10% increase in CPU utilization from processing downsampled (320x240) to high-resolution images (1280x720). Similarly, running the applications on machines with low battery had little or no effect on their performance.  
 
 <figure style="float: left; margin-left: 10px;">
   <img src="/assets/img/2020_08_04_spectral_xray_ava_downsample_load.jpg"
@@ -255,11 +255,11 @@ But regardless of some performance discrepancies when pushing the system quite h
   <figcaption>When processing high resolution images (1280x720) with the XRAY method in the same system configuration, there was only a 5% increase in CPU usage. Similar results were documented on my Macbook pro. </figcaption>
 </figure>
 
-But despite these relatively low CPU loads, the systems did not show very promising framerates. When processing low resolution images the lowest recorded framerate was around 14/15, which is very much usable, but on higher resolution images the lowest FPS reading was down at almost 6.
+But despite these relatively low CPU loads, the systems did not show very promising framerates. When processing low-resolution images the lowest recorded framerate was around 14/15, which is very much usable, but on higher resolution images the lowest FPS reading was down at almost 6.
 
-An interesting discovery was that changing the ```I/O Vector Size``` and ```Signal Vector Size``` had a noticeable impact on performance. This was visible and consistent when processing high resolution images in the AVA configuration. The behavior was that increasing the values of these audio settings effectively reduced the amount of lost frames (blank spots), which makes perfect sense considering that higher vector sizes should reduce CPU load.
+An interesting discovery was that changing the ```I/O Vector Size``` and ```Signal Vector Size``` had a noticeable impact on performance. This was visible and consistent when processing high-resolution images in the AVA configuration. The behavior was that increasing the values of these audio settings effectively reduced the number of lost frames (blank spots), which makes perfect sense considering that higher vector sizes should reduce CPU load.
 
-In terms of image quality, there was no advantage of rendering spectral images from high resolution video (1280x720), other than the occasional missing frame, as opposed to a downsampled (320x240) video-feed. The only factor that had any impact on the displayed image resolution was increasing the temporal resolution, or printing rate, of the images. An expected feature and side-effect of my system design.
+In terms of image quality, there was no advantage of rendering spectral images from a high-resolution video (1280x720), other than the occasional missing frame, as opposed to a downsampled (320x240) video-feed. The only factor that had any impact on the displayed image resolution was increasing the temporal resolution, or printing rate, of the images. An expected feature and side-effect of my system design.
 
 <figure style="float: left; margin-left: 10px;">
   <img src="/assets/img/2020_08_04_spectral_xray_display_downsampled.jpg"
@@ -281,9 +281,9 @@ In terms of image quality, there was no advantage of rendering spectral images f
   <figcaption>Test results for using the GPU method to calculate mean values when processing spectral images. The higher the score, the better the performance.</figcaption>
 </figure>
 
-Overall, the **GPU Method** showed some promising results when processing downsampled video-feeds. When processing high resolution images the system struggled to produce usable images, regardless of configuration or machine.
+Overall, the **GPU Method** showed some promising results when processing downsampled video-feeds. When processing high-resolution images the system struggled to produce usable images, regardless of configuration or machine.
 
-Interestingly, the GPU load of processing a downsampled video-feed with the **GPU Method** corresponded to the GPU load of processing both downsampled and high resolution video-feeds with the **XRAY method**, except it used *less* of the CPU's resources in the process. However, increasing the image resolution with the **XRAY method** did not amount to any significant increase in GPU utilization. In the **GPU method**, this increase in image resolution vastly increased the GPU utilization, effectively maxing out its resources pretty quickly.
+Interestingly, the GPU load of processing a downsampled video-feed with the **GPU Method** corresponded to the GPU load of processing both downsampled and high-resolution video-feeds with the **XRAY method**, except it used *less* of the CPU's resources in the process. However, increasing the image resolution with the **XRAY method** did not amount to any significant increase in GPU utilization. In the **GPU method**, this increase in image resolution vastly increased the GPU utilization, effectively maxing out its resources pretty quickly.
 
 <figure style="float: left; margin-left: 10px;">
   <img src="/assets/img/2020_08_04_spectral_gpu_ava_downsample_load.jpg"
@@ -327,7 +327,7 @@ In terms of image quality, I noticed the same disadvantage of rendering higher r
   <figcaption>Test results for using the PIX method to calculate mean values when processing spectral images. The higher the score, the better the performance.</figcaption>
 </figure>
 
-Another surprising finding was how awful the **PIX method** performed considering it used the same code as the **GPU method** only running on the CPU instead. The systems instantly crashed when processing high resolution video-feeds with this method. More so, testing showed that downsampling the video-feed had little or no positive effect on the overall load.
+Another surprising finding was how awful the **PIX method** performed considering it used the same code as the **GPU method** only running on the CPU instead. The systems instantly crashed when processing high-resolution video-feeds with this method. More so, testing showed that downsampling the video-feed had little or no positive effect on the overall load.
 
 <figure style="float: left; margin-right: 20px;">
   <img src="/assets/img/2020_08_04_spectral_pix_downsampled_load.jpg"
@@ -335,7 +335,7 @@ Another surprising finding was how awful the **PIX method** performed considerin
   <figcaption> Processing 320x240 images with the PIX method in the isolated configuration used close to 90% of my Thinkpad P53's CPU resources. Similar results were also documented on my Macbook pro. </figcaption>
 </figure>
 
-In fact, this method was so stressful on both my machines that it was challenging to get any data at all. When processing a downsampled video-feed on my Thinkpad I was able to register a stable (and whopping) 88% CPU utilization, which effectively explains the awful behavior. What's interesting here is that this might shed some light on how the GenExpr environment works and what kinds of processes it's optimized for. On the other hand, it might suggest that my code was bad...   
+This method was so stressful on my machines that it was challenging to get any data at all. When processing a downsampled video-feed on my Thinkpad I was able to register a stable (and whopping) 88% CPU utilization, which effectively explains the awful behavior. What's interesting here is that this might shed some light on how the GenExpr environment works and what kinds of processes it's optimized for. On the other hand, it might suggest that my code was bad...   
 
 <br>
 <br>
@@ -345,21 +345,21 @@ In fact, this method was so stressful on both my machines that it was challengin
 <br>
 
 # Conclusion
-First of all, these findings should not to be interpreted as being statistically significant in any way due to the small size of the experiment. More so, it's worth mentioning that the experiment does not heed to a particularly high scientific standard as it does not factor inn or control a vast range of variables that might have contributed to its results. This being said, the findings do provide some valuable insights into how we should design a system that generates spectral mean images in Max/MSP/Jitter.
+First of all, these findings should not be interpreted as being statistically significant in any way due to the small size of the experiment. More so, it's worth mentioning that the experiment does not heed to a particularly high scientific standard as it does not factor in or control a vast range of variables that might have contributed to its results. This being said, the findings do provide some valuable insights into how we should design a system that generates spectral mean images in Max/MSP/Jitter.
 
-To briefly recap, in this experiment I sought to determine whether an OpenGL spectral mean image system in Max/MSP/Jitter should do vector mean calculations on the CPU or the GPU by testing three different such methods (XRAY, GPU and PIX method), in two different configurations (isolated and AVA), on two different machines (Thinkpad P53 and Macbook Pro 15" early 2011 model). The findings indicate that the **XRAY method** was the most stable and reliable system. However, the **GPU method** can actually be a better alternative in some cases as it performs equally well on low resolution images while putting less stress on the machines CPU. So if you want a stable and highly controllable system that can accommodate various resolutions you should opt the for **XRAY method**. On the other hand, if you're only going to process relatively low resolution images and want to utilize most of your CPU power elsewhere, you should opt the **GPU method**.
+To briefly recap, in this experiment I sought to determine whether an OpenGL spectral mean image system in Max/MSP/Jitter should do vector mean calculations on the CPU or the GPU by testing three different such methods (XRAY, GPU and PIX method), in two different configurations (isolated and AVA), on two different machines (Thinkpad P53 and Macbook Pro 15" early 2011 model). The findings indicate that the **XRAY method** was the most stable and reliable system. However, the **GPU method** can be a better alternative in some cases as it performs equally well on low-resolution images while putting less stress on the machine's CPU. So if you want a stable and highly controllable system that can accommodate various resolutions you should opt the for **XRAY method**. On the other hand, if you're only going to process relatively low-resolution images and want to utilize most of your CPU power elsewhere, you should opt for the **GPU method**.
 
-The findings also revealed some interesting limitations with the code used to generate the mean images in the GPU and PIX methods. These limitations might be attributed the nature of the GenExpr language itself, it's speed and so on, or might simply be a side-effect of a sub-optimal code structure (basically bad coding on my part). Unfortunately, I found too little technical documentation to be able to rule out or confirm any of these assumptions.  
+The findings also revealed some interesting limitations with the code used to generate the mean images in the GPU and PIX methods. These limitations might be attributed to the nature of the GenExpr language itself, it's speed and so on, or might simply be a side-effect of a sub-optimal code structure (basically bad coding on my part). Unfortunately, I found too little technical documentation to be able to rule out or confirm any of these assumptions.  
 
 ## Algorithmic Downsampling
-The findings also suggest that we should always seek to downsample our video-feed before doing mean calculations, regardless of whether we use an XRAY or GPU method to generate our spectral images. This downsampling process is also a [**well-documented practice**](https://cycling74.com/tutorials/best-practices-in-jitter-part-1). The downsampling method I used in this experiment was pretty crude as it always downsampled the incoming image to 320x240. This is not very elegant because we might run into scenarios where we want to process video with even smaller dimensions, or where we want to have the opportunity to process high resolution images for various reasons. In this case, it's worth briefly looking at how we can design a more dynamic and permanent **downsampling method**.
+The findings also suggest that we should always seek to downsample our video-feed before doing mean calculations, regardless of whether we use an XRAY or GPU method to generate our spectral images. This downsampling process is also a [**well-documented practice**](https://cycling74.com/tutorials/best-practices-in-jitter-part-1). The downsampling method I used in this experiment was pretty crude as it always downsampled the incoming image to 320x240. This is not very elegant because we might run into scenarios where we want to process video with even smaller dimensions, or where we want to have the opportunity to process high-resolution images for various reasons. In this case, it's worth briefly looking at how we can design a more dynamic and permanent **downsampling method**.
 
-To illustrate how we could take a more algorithmic approach to downsampling, I designed a simple program in GenExpr that downsamples image dimensions based on a few conditions:
+To illustrate how we could take a more algorithmic approach to this downsampling, I designed a simple program in GenExpr that downsamples image dimensions based on a few conditions:
 
 * **If** the horizontal dimension is larger than the vertical dimension, **and** 1/3 of the horizontal dimension is *greater* than 320, **then** we scale the horizontal dimension to 1/3 of its original size and scale the vertical dimension to the value that ensures we preserve the aspect ratio of the incoming image.
 * However, **if** the horizontal dimension is larger than the vertical dimension, **and** 1/3 of the horizontal dimension is *smaller* than 320, we do nothing.
 
-The processes is the same if the vertical dimension is larger than the horizontal dimension, only then we use the vertical dimension as "the basis" for the aspect ratio and take 240 as the standard as opposed to 320. Here's what this translates to in GenExpr code:
+The process is the same if the vertical dimension is larger than the horizontal dimension, except we use the vertical dimension as "the basis" for the aspect ratio and take 240 as the standard as opposed to 320. Here's what this translates to in GenExpr code:
 
 ```
 xdim, ydim = 0; //in1 is the X-dim, and in2 is the Y-dim
