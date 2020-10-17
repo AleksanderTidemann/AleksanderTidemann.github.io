@@ -126,10 +126,10 @@ sup {
 }
 
 
-
 /**
  * Site footer
  */
+ 
 .site-footer {
   border-top: 1px solid $border-color-01;
   padding: $spacing-unit 0;
@@ -264,8 +264,6 @@ sup {
   @include relative-font-size(1.5);
   &:hover { color: darken($link-base-color, 15%) }
 }
-
-
 
 /**
  * Posts
