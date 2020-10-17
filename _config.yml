@@ -13,7 +13,7 @@ disqus:
   shortname: aleksandertidemann-github-io
 
 show_excerpts: true # set to true to show excerpts on the homepage
-paginate: 3
+paginate: 5
 paginate_path: "/blog/page:num/"
 categories:
   - General
