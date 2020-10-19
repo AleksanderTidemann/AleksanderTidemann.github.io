@@ -129,7 +129,7 @@ sup {
 /**
  * Site footer
  */
- 
+
 .site-footer {
   border-top: 1px solid $border-color-01;
   padding: $spacing-unit 0;
@@ -470,6 +470,28 @@ sup {
      text-decoration: none;
    }
  }
+
+ /**
+  * Read More button
+
+  .read-more {
+    margin-top: 1.5em;
+
+    & > a {
+      color: $text-color;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background-color: darken($link-base-color, 61%);
+      transition: 0.1s;
+
+      &:hover {
+        color: darken($link-base-color, 15%);
+      }
+    }
+  }
+  */
+
 
  /**
   * Image and Figures
